@@ -16,7 +16,7 @@ class MyApp(App):
 
     def build(self):
         cube = Cube('RGBOWY', pos = (200, 200), side = 250, border = 5)
-        cube.rotate('x10', 'z10')
+        cube.rotate('x2', 'z2')
         return cube
 
 if __name__ == '__main__':

@@ -62,7 +62,7 @@ class Cube(FloatLayout):
                 j.rotate(self.cx, self.cy, self.cz, *angles)
             self.reprint()
 
-        Clock.schedule_interval(foo, 0.1)
+        Clock.schedule_interval(foo, 0.03)
 
 
    
