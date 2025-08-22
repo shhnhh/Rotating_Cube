@@ -1,4 +1,4 @@
-from math import *
+import numpy as np
 
 #   y
 #   ^
@@ -7,35 +7,47 @@ from math import *
 #  /
 # z
 
-class Point():
+class Point:
 
     def __init__(self, x, y, z, **kwargs):
         super(Point, self).__init__(**kwargs)
-        self.x, self.y, self.z = x, y, z
+        self.coords = np.array([x, y, z], dtype=np.float32)
 
     def rotate_x(self, angle, x0, y0, z0):
-        r = radians(angle)
-        x = x0 + (self.x - x0) * cos(r) - (self.z - z0) * sin(r)
-        y = self.y
-        z = z0 + (self.x - x0) * sin(r) + (self.z - z0) * cos(r)
-        self.x, self.y, self.z = x, y, z
-        
+        r = np.radians(angle)
+        rot_matrix = np.array([
+            [np.cos(r), 0, np.sin(r)],
+            [0, 1, 0],
+            [-np.sin(r), 0, np.cos(r)]
+        ])
+        self.coords -= (x0, y0, z0)
+        self.coords = rot_matrix @ self.coords
+        self.coords += (x0, y0, z0)
 
     def rotate_y(self, angle, x0, y0, z0):
-        r = radians(angle)
-        x = x0 + (self.x - x0) * cos(r) - (self.y - y0) * sin(r)
-        y = y0 + (self.x - x0) * sin(r) + (self.y - y0) * cos(r)
-        z = self.z
-        self.x, self.y, self.z = x, y, z
+        r = np.radians(angle)
+        rot_matrix = np.array([
+            [np.cos(r), -np.sin(r), 0],
+            [np.sin(r), np.cos(r), 0],
+            [0, 0, 1]
+        ])
+        self.coords -= (x0, y0, z0)
+        self.coords = rot_matrix @ self.coords
+        self.coords += (x0, y0, z0)
     
     def rotate_z(self, angle, x0, y0, z0):
-        r = radians(angle)
-        x = self.x
-        y = y0 + (self.y - y0) * cos(r) - (self.z - z0) * sin(r)
-        z = z0 + (self.y - y0) * sin(r) + (self.z - z0) * cos(r)
-        self.x, self.y, self.z = x, y, z
+        r = np.radians(angle)
+        rot_matrix = np.array([
+            [1, 0, 0],
+            [0, np.cos(r), -np.sin(r)],
+            [0, np.sin(r), np.cos(r)]
+        ])
+        self.coords -= (x0, y0, z0)
+        self.coords = rot_matrix @ self.coords
+        self.coords += (x0, y0, z0)
 
     def pos(self):
-        return self.x, self.y, self.z
+        return self.coords
+    
 
     

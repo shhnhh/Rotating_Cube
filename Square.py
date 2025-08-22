@@ -35,9 +35,9 @@ class Square(Widget):
             Point(pos[0] + self.side - border, pos[1] + border, 0),
         )
 
-        self.reprint()        
+        self.redraw()        
 
-    def reprint(self):
+    def redraw(self):
 
         self.canvas.clear()
         with self.canvas:
@@ -77,7 +77,7 @@ class Square(Widget):
             elif c == 'z':
                 self.rotate_z(angle, x0, y0, z0)
         
-        self.reprint()
+        self.redraw()
 
     def cz(self):
         lst_z = [i.pos()[2] for i in self.lst]
